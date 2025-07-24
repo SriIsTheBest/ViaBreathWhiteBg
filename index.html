@@ -21,7 +21,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const geometry = new THREE.SphereGeometry(1, 128, 128);
+    const geometry = new THREE.SphereGeometry(1, 180, 180);
 
     const uniforms = {
       uTime: { value: 0.0 }
@@ -105,7 +105,7 @@
           pos += normal * displacement;
           vPosition = pos;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = 1.0;
+          gl_PointSize = 3.0;
         }
       `,
       fragmentShader: `
@@ -130,9 +130,11 @@
           } else {
             color = mix(purple, beige, (t - 0.66) / 0.34);
           }
-
-          gl_FragColor = vec4(color, 1.0);
+          float dist = length(gl_PointCoord - 0.5);
+          float alpha = smoothstep(0.5, 0.45, dist); // 0.45 = sharper edge, 0.5 = softer edge
+          gl_FragColor = vec4(color, alpha);
         }
+
       `,
       transparent: true
     });
@@ -150,6 +152,7 @@
     function animate() {
       uniforms.uTime.value = clock.getElapsedTime();
       renderer.render(scene, camera);
+      
       requestAnimationFrame(animate);
     }
     animate();
