@@ -22,7 +22,7 @@
     renderer.setClearColor(0x000000, 0); // <-- this makes canvas transparent!
     document.body.appendChild(renderer.domElement);
 
-    const geometry = new THREE.SphereGeometry(1, 180, 180);
+    const geometry = new THREE.SphereGeometry(1, 128, 128);
 
     const uniforms = {
       uTime: { value: 0.0 }
@@ -106,7 +106,7 @@
           pos += normal * displacement;
           vPosition = pos;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = 1.0;
+          gl_PointSize = 2.0;
         }
       `,
       fragmentShader: `
