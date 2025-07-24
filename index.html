@@ -106,7 +106,7 @@
           pos += normal * displacement;
           vPosition = pos;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = 2.0;
+          gl_PointSize = 1.0;
         }
       `,
       fragmentShader: `
